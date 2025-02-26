@@ -1,0 +1,25 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<'a'> {
+    href: string;
+    as?: keyof HTMLElementTagNameMap;
+    size?: "sm" | "md" | "lg" | "xl" | "2xl";
+    variant?: "primary" | "secondary";
+}
+
+
+const { href, size='md', variant='primary', as: As="a", ...attrs } = Astro.props;
+---
+
+
+<As href={href} class:list={[
+    "inline-flex items-center justify-center rounded-md font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+    "px-4 py-2",
+    "text-sm",
+    size === "sm" ? "text-sm" : size === "md" ? "text-base" : size === "lg" ? "text-lg" : "" ? "xl" : "text-xl",
+    variant === "primary" ? "bg-blue-600 hover:bg-blue-700" : variant === "secondary" ? "bg-gray-600 hover:bg-gray-700" : "",
+    attrs.class
+]} {...attrs}>
+    <slot />
+</As>

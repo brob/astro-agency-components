@@ -1,0 +1,24 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<'div'> {
+    as?: keyof HTMLElementTagNameMap;
+    width?: "regular" | "narrow";
+    vPadding?: "xl" | "lg" | "md" | "sm";
+    center?: boolean;
+}
+
+const { as: As="div", width="regular", vPadding="xl", center=true, ...attrs} = Astro.props;
+
+---
+
+<As class:list={[
+    "container",
+    vPadding === "xl" ? "py-12" : vPadding === "lg" ? "py-8" : vPadding === "md" ? "py-6" : vPadding === "sm" ? "py-4" : "",
+    width === "regular" ? "max-w-7xl" : "max-w-5xl",
+    center ? "mx-auto" : "",
+    attrs.class
+]}
+{...attrs}>
+    <slot />
+</As>
